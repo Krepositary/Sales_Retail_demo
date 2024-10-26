@@ -41,7 +41,7 @@ filtered_data = data[(data["Year"] == selected_year) & (data["Sales"] >= min_sal
 filtered_data = filtered_data.head(num_products)  # Limit to the selected number of products
 
 # Main title
-st.title("Retail Sales Analysis App")
+st.title("MY_Retails_shop Sales Analysis App")
 
 # Display filtered results
 st.write(f"**Filtered Results for Year {selected_year} with Minimum Sales {min_sales}:**")
