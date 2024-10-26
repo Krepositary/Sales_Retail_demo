@@ -3,14 +3,36 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Sample data creation
+# Sample data creation with specific product names
 def create_sample_data():
     years = np.arange(2018, 2024)
-    products = [f"Product {i+1}" for i in range(20)]  # 20 different products
+    products = [
+        ("Smartphone", "Electronics"),
+        ("Laptop", "Electronics"),
+        ("Tablet", "Electronics"),
+        ("T-shirt", "Clothing"),
+        ("Jeans", "Clothing"),
+        ("Jacket", "Clothing"),
+        ("Pizza", "Food"),
+        ("Pasta", "Food"),
+        ("Soda", "Food"),
+        ("Fiction Book", "Books"),
+        ("Non-Fiction Book", "Books"),
+        ("Textbook", "Books"),
+        ("Headphones", "Electronics"),
+        ("Smartwatch", "Electronics"),
+        ("Sneakers", "Clothing"),
+        ("Chips", "Food"),
+        ("Candy", "Food"),
+        ("Novel", "Books"),
+        ("Cookbook", "Books"),
+        ("Dress", "Clothing")
+    ]
+    
     sales_data = {
         "Year": np.repeat(years, len(products)),
-        "Product": np.tile(products, len(years)),
-        "Type": np.random.choice(['Electronics', 'Clothing', 'Food', 'Books'], size=len(years) * len(products)),
+        "Product": [product[0] for product in products for _ in years],
+        "Type": [product[1] for product in products for _ in years],
         "Sales": np.random.randint(100, 1000, size=len(years) * len(products))
     }
     return pd.DataFrame(sales_data)
@@ -19,7 +41,7 @@ def create_sample_data():
 data = create_sample_data()
 
 # Set page title and icon
-st.set_page_config(page_title="My_Retail_shop Sales Analysis", page_icon="🏬")
+st.set_page_config(page_title="Retail Sales Analysis", page_icon="🏬")
 
 # Sidebar for user input
 st.sidebar.title("Filter Sales Data")
@@ -41,7 +63,7 @@ filtered_data = data[(data["Year"] == selected_year) & (data["Sales"] >= min_sal
 filtered_data = filtered_data.head(num_products)  # Limit to the selected number of products
 
 # Main title
-st.title("MY_Retails_shop Sales Analysis App")
+st.title("MY Retail store Sales Analysis App")
 
 # Display filtered results
 st.write(f"**Filtered Results for Year {selected_year} with Minimum Sales {min_sales}:**")
