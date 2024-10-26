@@ -6,10 +6,12 @@ import matplotlib.pyplot as plt
 # Sample data creation
 def create_sample_data():
     years = np.arange(2018, 2024)
+    products = [f"Product {i+1}" for i in range(20)]  # 20 different products
     sales_data = {
-        "Year": np.repeat(years, 10),
-        "Product": np.tile([f"Product {i+1}" for i in range(10)], len(years)),
-        "Sales": np.random.randint(100, 1000, size=len(years) * 10)
+        "Year": np.repeat(years, len(products)),
+        "Product": np.tile(products, len(years)),
+        "Type": np.random.choice(['Electronics', 'Clothing', 'Food', 'Books'], size=len(years) * len(products)),
+        "Sales": np.random.randint(100, 1000, size=len(years) * len(products))
     }
     return pd.DataFrame(sales_data)
 
@@ -28,8 +30,15 @@ selected_year = st.sidebar.selectbox("Select Year", options=data["Year"].unique(
 # Slider for minimum sales value
 min_sales = st.sidebar.slider("Minimum Sales", min_value=0, max_value=int(data["Sales"].max()), value=200)
 
+# Slider for number of products to display
+num_products = st.sidebar.slider("Number of Products to Display", min_value=1, max_value=20, value=5)
+
+# Multi-select for product types
+selected_types = st.sidebar.multiselect("Select Product Types", options=data["Type"].unique(), default=data["Type"].unique())
+
 # Filter data based on user input
-filtered_data = data[(data["Year"] == selected_year) & (data["Sales"] >= min_sales)]
+filtered_data = data[(data["Year"] == selected_year) & (data["Sales"] >= min_sales) & (data["Type"].isin(selected_types))]
+filtered_data = filtered_data.head(num_products)  # Limit to the selected number of products
 
 # Main title
 st.title("Retail Sales Analysis App")
@@ -63,3 +72,4 @@ with tabs[1]:
 
 # Footer
 st.write("Analyzing sales data made easy! ✨")
+
