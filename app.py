@@ -19,7 +19,7 @@ def create_sample_data():
 data = create_sample_data()
 
 # Set page title and icon
-st.set_page_config(page_title="Retail Sales Analysis", page_icon="🏬")
+st.set_page_config(page_title="My_Retail_shop Sales Analysis", page_icon="🏬")
 
 # Sidebar for user input
 st.sidebar.title("Filter Sales Data")
